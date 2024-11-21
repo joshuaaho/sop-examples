@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Display</title>
+</head>
+
+<body>
+    <h1>Image Display Example</h1>
+
+    <!-- No problem -->
+    <img src="http://localhost:3000/image" alt="Placeholder Image">
+
+    <p>This is an example of an image fetched for an img tag</p>
+
+    <!-- SOP and CORS issues -->
+
+    <button id="fetchImage">Fetch Image And Read Response</button>
+
+    <button id="fetchImage2">Fetch Image With Custom Header </button>
+
+    <script>
+
+        //Request will go through but response is unreadable
+        document.getElementById('fetchImage').addEventListener('click', () => {
+            fetch('http://localhost:3000/image', {
+                method: 'GET',
+
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Image fetched successfully!');
+                    } else {
+                        alert('Failed to fetch image: ' + response.statusText);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+        });
+
+        //Request will not go through because of a failed preflight request
+        document.getElementById('fetchImage2').addEventListener('click', () => {
+            fetch('http://localhost:3000/image', {
+                method: 'GET',
+                headers: {
+
+                    'X-Custom-Header': 'YourCustomHeaderValue' // Add your custom header here
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        alert('Image fetched successfully!');
+                    } else {
+                        alert('Failed to fetch image: ' + response.statusText);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error.message);
+                });
+        });
+    </script>
+</body>
+
+</html>

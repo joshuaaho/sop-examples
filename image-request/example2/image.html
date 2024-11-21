@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Image Data Example</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Draw Image on Canvas and Get Image Data</h1>
+    <canvas id="myCanvas" width="500" height="400"></canvas>
+    <button id="getDataBtn">Get Image Data</button>
+
+
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        img.src = 'https://via.placeholder.com/300'; // Replace with your image URL
+
+        img.onload = function () {
+            // Draw the image onto the canvas
+            ctx.drawImage(img, 0, 0);
+        };
+
+        document.getElementById('getDataBtn').addEventListener('click', function () {
+            // Will result in error since image is not CORS approved 
+
+            try {
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                alert("Canvas data: " + imageData)
+            } catch (error) {
+                alert("Error: " + error)
+            }
+
+        });
+    </script>
+</body>
+
+</html>
